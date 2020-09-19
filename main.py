@@ -20,30 +20,34 @@ def format_number_category(num: int):
 
 def main():
     start_time = time.time()
-    i = 2
+    i = 1
     k = 1
     RESULT = []
-    while i <= 2:
+    while i <= 21:
         temp_j = []
         j = 1
-        if len(bs4.BeautifulSoup(requests.get(f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
+        if len(bs4.BeautifulSoup(requests.get(
+                f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
                                  "html.parser").find_all(class_="elementor-image-box-wrapper")) > 0:
-            while j <= len(bs4.BeautifulSoup(requests.get(f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
+            while j <= len(bs4.BeautifulSoup(requests.get(
+                    f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
                                              "html.parser").find_all(class_="elementor-image-box-wrapper")):
                 counter = 0
                 temp_item = []
 
-                for item in (bs4.BeautifulSoup(requests.get(f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
+                for item in (bs4.BeautifulSoup(requests.get(
+                        f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
                                                "html.parser").find_all(class_="elementor-image-box-wrapper")):
-                                               print(f'{item.div.p}{bool(item.div.p)}')
-                    temp_item.append({"index_item_k": counter, "title": str(item.div.h3.get_text()),"description": str(item.div.p.get_text()),"image":item.figure.img["src"] })  # INDEX{J}
-                        
+                    # print(f'{item.div.p}{bool(item.div.p)}')
+                    temp_item.append({"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"]})  # INDEX{J}
 
                     # print("-----------------------------------------------------------")
                     print(
                         f'----------------------------------------------------------- /{format_number_category(i)}/{format_number_subcategory(j)}/')
 
-                    print({"index_item_k": counter, "title": str(item.div.h3.get_text()), "description": str(item.div.p.get_text()),"image":item.figure.img["src"] })
+                    print({"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"]})
                     print("-----------------------------------------------------------")
                     counter += 1
 
@@ -51,13 +55,15 @@ def main():
                 print(f'was \n\n{j} in j\n\n')
                 j += 1
         else:
-            while j < len(bs4.BeautifulSoup(requests.get(f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)}').text,
+            while j < len(bs4.BeautifulSoup(requests.get(
+                    f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)}').text,
                                             "html.parser").find_all(class_="elementor-image-box-wrapper")):
                 counter = 0
                 k = 1
                 temp_item = []
                 while k <= len(
-                        bs4.BeautifulSoup(requests.get(f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)}').text,
+                        bs4.BeautifulSoup(requests.get(
+                            f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)}').text,
                                           "html.parser").find_all(class_="elementor-image-box-wrapper")):
                     for item in (
                             bs4.BeautifulSoup(
@@ -65,11 +71,13 @@ def main():
                                     f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)} ').text,
                                 "html.parser").find_all(class_="elementor-image-box-wrapper")):
                         temp_item.append(
-                            {"index_item_k": counter, "title": str(item.div.h3.get_text()), "description": str(item.div.p.get_text()),"image":item.figure.img["src"] })  # INDEX{J}
+                            {"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"]})  # INDEX{J}
 
                         print(
                             f'----------------------------------------------------------- /{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)}')
-                        print({"index_item_k": counter, "title": str(item.div.h3.get_text()), "description": str(item.div.p.get_text()),"image":item.figure.img["src"] })
+                        print({"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"]})
                         print(
                             "-----------------------------------------------------------")
                         counter += 1
