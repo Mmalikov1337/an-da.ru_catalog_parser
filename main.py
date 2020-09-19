@@ -20,10 +20,10 @@ def format_number_category(num: int):
 
 def main():
     start_time = time.time()
-    i = 15
+    i = 1
     k = 1
     RESULT = []
-    while i <= 16:
+    while i <= 21:
         # temp_j = []
         j = 1
         if len(bs4.BeautifulSoup(requests.get(
