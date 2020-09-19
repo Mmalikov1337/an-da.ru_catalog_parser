@@ -24,7 +24,7 @@ def main():
     k = 1
     RESULT = []
     while i <= 16:
-        temp_j = []
+        # temp_j = []
         j = 1
         if len(bs4.BeautifulSoup(requests.get(
                 f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
@@ -33,25 +33,32 @@ def main():
                     f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
                                              "html.parser").find_all(class_="elementor-image-box-wrapper")):
                 counter = 0
-                temp_item = []
+                # temp_item = []
 
                 for item in (bs4.BeautifulSoup(requests.get(
                         f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/').text,
                                                "html.parser").find_all(class_="elementor-image-box-wrapper")):
                     # print(f'{item.div.p}{bool(item.div.p)}')
-                    temp_item.append({"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
-                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})  # INDEX{J}
+                    RESULT.append({"index_item_k": counter,
+                                   "category_id": i,
+                                   "subcategory_id": j,
+                                   "name": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                                   "description": str(item.div.p.get_text()) if bool(
+                                       item.div.p) else "NO_DESCRIPTION",
+                                   "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})  # INDEX{J}
 
                     # print("-----------------------------------------------------------")
                     print(
                         f'----------------------------------------------------------- /{format_number_category(i)}/{format_number_subcategory(j)}/')
 
-                    print({"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
-                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})
+                    print({"index_item_k": counter,
+                           "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                           "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION",
+                           "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})
                     print("-----------------------------------------------------------")
                     counter += 1
 
-                temp_j.append({"index_j": j, "CONTENT_J": temp_item})
+                # RESULT.append({"index_j": j, "CONTENT_J": temp_item})
                 print(f'was \n\n{j} in j\n\n')
                 j += 1
         else:
@@ -70,26 +77,33 @@ def main():
                                 requests.get(
                                     f'https://an-da.ru/catalog/{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)} ').text,
                                 "html.parser").find_all(class_="elementor-image-box-wrapper")):
-                        temp_item.append(
-                            {"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
-                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION", "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})  # INDEX{J}
+                        RESULT.append(
+                            {"index_item_k": counter,
+                             "category_id": i,
+                             "subcategory_id": j,
+                             "name": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                             "description": str(item.div.p.get_text()) if bool(
+                                 item.div.p) else "NO_DESCRIPTION",
+                             "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})  # INDEX{J}
 
                         print(
                             f'----------------------------------------------------------- /{format_number_category(i)}/{format_number_subcategory(j)}/{format_number_subcategory(k)}')
-                        print({"index_item_k": counter, "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
-                             "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION","image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})
+                        print({"index_item_k": counter,
+                               "title": str(item.div.h3.get_text()) if bool(item.div.h3) else item.div.h3,
+                               "description": str(item.div.p.get_text()) if bool(item.div.p) else "NO_DESCRIPTION",
+                               "image": item.figure.img["src"] if bool(item.figure) else "NO_IMAGE"})
                         print(
                             "-----------------------------------------------------------")
                         counter += 1
 
-                    temp_j.append({"index_j": j, "CONTENT_J": temp_item})
+                    # temp_j.append({"index_j": j, "CONTENT_J": temp_item})
                     k += 1
 
                 print(f'was \n\n{j} in j\n\n')
                 j += 1
 
         print(f'was \n\n{i} in i\n\n')
-        RESULT.append({"index_i": i, "CONTENT_I": temp_j})
+        # RESULT.append({"index_i": i, "CONTENT_I": temp_j})
         i += 1
 
     # print('\n\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
